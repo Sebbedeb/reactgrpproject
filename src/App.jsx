@@ -30,9 +30,8 @@ function App() {
       //URL, callback, method, body
       `${APIURL}/${person.id}`, //URL
       (person) => {
-        setPersons(persons.map((p) => (p.id == person.id ? { ...person } : p))
-        );
-    }, //Callback
+        setPersons(persons.map((p) => (p.id == person.id ? { ...person } : p)));
+      }, //Callback
       "PUT", //Method
       person //Body
     );
