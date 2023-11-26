@@ -2,38 +2,35 @@
   "api": [
     {
       "id": 1,
-      "age": "22",
-      "name": "Steven",
-      "email": "steve@test.com",
-      "gender": "male"
+      "amount": 26,
+      "name": "Borreload Savage Dragon",
+      "rarity": "Secret Rare",
+      "price": "67.67",
+      "cardimage": "borreload.jpg"
     },
     {
       "id": 2,
-      "age": "19",
-      "name": "Michelle",
-      "email": "michelle@test.com",
-      "gender": "female"
+      "amount": 11,
+      "name": "Baronne de Fleur",
+      "rarity": "Quarter Century Rare",
+      "price": 120,
+      "cardimage": "mm08.jpg"
     },
     {
       "id": 4,
-      "age": "45",
-      "name": "Karl",
-      "email": "karl@test.com",
-      "gender": "male"
-    },
-    {
-      "id": 5,
-      "age": "15",
-      "name": "Michael",
-      "email": "michael@test.com",
-      "gender": "male"
+      "amount": 45,
+      "name": "Spright Blue",
+      "rarity": "Secret Rare",
+      "price": 20,
+      "cardimage": "sprightblue.png"
     },
     {
       "id": 6,
-      "age": "27",
-      "name": "Seb",
-      "email": "test@test.com",
-      "gender": "male"
+      "amount": 27,
+      "name": "Melffy Puppy",
+      "rarity": "Super Rare",
+      "price": 0.42,
+      "cardimage": "melfypuppy.jpg"
     }
   ]
 }

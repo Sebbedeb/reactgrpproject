@@ -1,85 +1,136 @@
 import "./styles/App.css";
-import PersonList from "./components/PersonList";
-import PersonForm from "./components/PersonForm";
+import CardList from "./components/CardList";
+import CardForm from "./components/CardForm";
 import { useEffect, useState } from "react";
 import { fetchData } from "./util/persistence";
 
-const blankPerson = { id: "", age: "", name: "", email: "", gender: "" };
+const blankCard = { id: null, name: "", amount: null, rarity: "", price: null };
 
 function App() {
-  const [persons, setPersons] = useState([]);
-  const [personToEdit, setPersonToEdit] = useState(blankPerson);
+  const [cards, setCards] = useState([]);
+  const [cardToEdit, setCardToEdit] = useState(blankCard);
+  const [currentCard, setCurrentCard] = useState(blankCard);
+
+  const [currentFunds, setCurrentFunds] = useState(1000);
 
   const APIURL = "http://localhost:3000/api";
 
-  function editPerson(person) {
-    setPersonToEdit(person);
+  function editCard(card) {
+    setCardToEdit(card);
   }
 
-  function mutatePerson(person) {
-    if (person.id !== "") {
+  function mutateCard(card) {
+    if (card.id !== "") {
       //PUT
-      updatePerson(person);
+      updateCard(card);
     } else {
-      createPerson(person);
+      createCard(card);
     }
   }
 
-  function updatePerson(person) {
+  function getCardById(cardId) {
+    // fetch data
+    fetchData(`${APIURL}/${cardId}`, (data) => setCurrentCard(data), "GET");
+  }
+
+  function updateCard(card) {
+    // Update on the server/API side
     fetchData(
-      //URL, callback, method, body
-      `${APIURL}/${person.id}`, //URL
-      (person) => {
-        setPersons(persons.map((p) => (p.id == person.id ? { ...person } : p)));
-      }, //Callback
-      "PUT", //Method
-      person //Body
+      `${APIURL}/${card.id}`,
+      (updatedCard) => {
+        // Update on the client side
+        setCards((prevCards) =>
+          prevCards.map((c) => (c.id === updatedCard.id ? updatedCard : c))
+        );
+      },
+      "PUT",
+      card
     );
   }
 
-  function createPerson(person) {
+  function createCard(card) {
     fetchData(
       //URL, callback, method, body
       APIURL, //URL
-      (person) => setPersons([...persons, person]), //Callback
+      (card) => setCards([...cards, card]), //Callback
       "POST", //Method
-      person //Body
+      card //Body
     );
   }
 
-  function getPersons(callback) {
+  function getCards(callback) {
     // fetch data
     fetchData(APIURL, callback);
   }
 
-  function deletePersonById(personId) {
-    // delete person from api
-    fetchData(`${APIURL}/${personId}`, () => {}, "DELETE");
+  function deleteCardById(cardId) {
+    // delete card from api
+    fetchData(`${APIURL}/${cardId}`, () => {}, "DELETE");
 
-    // delete from persons array via setPersons()
-    setPersons([...persons.filter((person) => person.id !== personId)]);
+    // delete from cards array via setCards()
+    setCards([...cards.filter((card) => card.id !== cardId)]);
   }
 
+  function buyCard(cardId) {
+    // Increase card amount by 1 and reduce funds by card price
+    console.log("Before state update:", currentCard, currentFunds);
+    getCardById(cardId);
+    if (currentCard.price <= currentFunds) {
+      currentCard.amount++;
+      updateCard(currentCard);
+      setCurrentFunds((prevFunds) => prevFunds - currentCard.price);
+    } else {
+      alert("Insufficient funds");
+    }
+    console.log("After state update:", currentCard, currentFunds);
+  }
+
+
+  function sellCard(cardId) {
+    // Decrease card amount by 1 and increase funds by card price
+    getCardById(cardId);
+  
+    if (currentCard.amount > 0) {
+      currentCard.amount--;
+  
+      setCurrentFunds((prevFunds) => prevFunds + currentCard.price);
+      updateCard(currentCard);
+    } else {
+      alert("No cards available to sell");
+    }
+  }
+
+
   useEffect(() => {
-    // get all persons
-    getPersons((data) => setPersons(data));
+    // get all cards from api
+    getCards((data) => setCards(data));
   }, []);
 
   return (
     <>
-      <div>
-        <h1>ReactProject</h1>
-        <p>Nu skal der kodes</p>
-        <PersonForm
-          blankPerson={blankPerson}
-          personToEdit={personToEdit}
-          mutatePerson={mutatePerson}
+      <div className="container">
+        <div className="row">
+        <div className="col-8">
+        <CardList
+          cards={cards}
+          deleteCardById={deleteCardById}
+          editCard={editCard}
+          buyCard={buyCard}
+          sellCard={sellCard}
         />
-        <PersonList
-          persons={persons}
-          deletePersonById={deletePersonById}
-          editPerson={editPerson}
+      </div>
+        <div className="col-4">
+        <h1>CardShack</h1>
+        <h2>Inventory Manager</h2>
+        <h3>Current Funds: {currentFunds}</h3>
+        <CardForm
+          blankCard={blankCard}
+          cardToEdit={cardToEdit}
+          mutateCard={mutateCard}
         />
+        </div>
+       
+      </div>
       </div>
     </>
   );

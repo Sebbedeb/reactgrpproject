@@ -1,40 +1,44 @@
 {
-    "api":
-    [
-      {
-        "id": 1,
-        "age": "22",
-        "name": "Steve",
-        "email": "steve@test.com",
-        "gender": "male"
-      },
-      {
-        "id": 2,
-        "age": "19",
-        "name": "Michelle",
-        "email": "michelle@test.com",
-        "gender": "female"
-      },
-      {
-        "id": 3,
-        "age": "30",
-        "name": "Anna",
-        "email": "anna@test.com",
-        "gender": "female"
-      },
-      {
-        "id": 4,
-        "age": "45",
-        "name": "Karl",
-        "email": "karl@test.com",
-        "gender": "male"
-      },
-      {
-        "id": 5,
-        "age": "15",
-        "name": "Michael",
-        "email": "michael@test.com",
-        "gender": "male"
-      }
-    ]
-  }
+  "api": [
+    {
+      "id": 1,
+      "amount": 34,
+      "name": "Borreload Savage Dragon",
+      "rarity": "Secret Rare",
+      "price": 67.42,
+      "cardimage": "borreload.jpg"
+    },
+    {
+      "id": 2,
+      "amount": 11,
+      "name": "Baronne de Fleur",
+      "rarity": "Quarter Century Rare",
+      "price": 120,
+      "cardimage": "mm08.jpg"
+    },
+    {
+      "id": 4,
+      "amount": 45,
+      "name": "Spright Blue",
+      "rarity": "Secret Rare",
+      "price": 20,
+      "cardimage": "sprightblue.png"
+    },
+    {
+      "id": 5,
+      "amount": 15,
+      "name": "Book of moon",
+      "rarity": "Common",
+      "price": 0.42,
+      "cardimage": "moonbook.png"
+    },
+    {
+      "id": 6,
+      "amount": 27,
+      "name": "Melffy Puppy",
+      "rarity": "Super Rare",
+      "price": 0.42,
+      "cardimage": "melfypuppy.jpg"
+    }
+  ]
+}
